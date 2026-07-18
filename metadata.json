@@ -1,0 +1,6 @@
+{
+  "name": "Sann Cloud",
+  "description": "Unlimited cloud storage and AI chat built with Next.js",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

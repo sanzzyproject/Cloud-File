@@ -1,0 +1,20 @@
+import './globals.css';
+
+export const metadata = {
+  title: 'Sann Cloud',
+  description: 'Cloud Storage & AI Assistant',
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en">
+      <body>
+        {children}
+      </body>
+    </html>
+  );
+}
