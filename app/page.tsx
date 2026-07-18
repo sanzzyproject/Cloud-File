@@ -22,6 +22,12 @@ export default function Page() {
   const [sendingChat, setSendingChat] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
+  const vibrate = (pattern: number | number[]) => {
+    if (typeof window !== "undefined" && window.navigator && window.navigator.vibrate) {
+      window.navigator.vibrate(pattern);
+    }
+  };
+
   useEffect(() => {
     setIsMounted(true);
     const initApp = async () => {
@@ -76,6 +82,7 @@ export default function Page() {
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || !e.target.files[0] || !backupId) return;
+    vibrate(50);
     setUploading(true);
     const file = e.target.files[0];
     const formData = new FormData();
@@ -98,6 +105,7 @@ export default function Page() {
 
   const handleDeleteFile = async (key: string) => {
     if (!backupId) return;
+    vibrate(50);
     try {
       await fetch("/api/storage/files", {
         method: "DELETE",
@@ -112,6 +120,7 @@ export default function Page() {
 
   const handleEraseDevice = async () => {
     if (!backupId || !confirm("Are you sure you want to erase all data on this node?")) return;
+    vibrate([100, 50, 100]);
     try {
       await fetch("/api/account", {
         method: "DELETE",
@@ -129,6 +138,7 @@ export default function Page() {
     e.preventDefault();
     if (!chatInput.trim() || sendingChat) return;
     
+    vibrate(50);
     const userMsg = chatInput.trim();
     setMessages(prev => [...prev, { role: "user", content: userMsg }]);
     setChatInput("");
@@ -491,7 +501,7 @@ export default function Page() {
             return (
               <button 
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)} 
+                onClick={() => { vibrate(10); setActiveTab(tab.id as any); }} 
                 className="relative flex items-center justify-center w-16 h-12 rounded-full transition-colors"
               >
                 {isActive && (
